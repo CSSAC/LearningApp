@@ -1,12 +1,14 @@
 package com.example.prrateekk.learningapp;
 
+import java.io.Serializable;
+
 /**
  * Created by prrateekk on 8/3/18.
  */
 
 // POJO for MCQ Type Quiz
 
-public class MCQProblem {
+public class MCQProblem implements Serializable{
     private int id;
     private String statement;
     private String options[];
