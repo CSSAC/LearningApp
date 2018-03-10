@@ -35,6 +35,14 @@ public class GameActivity extends AppCompatActivity {
         dr = getResources().getIdentifier(DRAWABLE + options[0], null, getPackageName());
         drawable = getResources().getDrawable(dr);
         imageView.setImageDrawable(drawable);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("ID", getResources().getResourceEntryName(view.getId()));
+            }
+        });
+
     }
 
     public void nextMCQ(View view) {
@@ -49,4 +57,5 @@ public class GameActivity extends AppCompatActivity {
             mcqCounter++;
         }
     }
+
 }
