@@ -61,6 +61,12 @@ public class MCQHandler extends SQLiteAssetHelper {
 //        }
 //    }
 
+//    void emptyTable() {
+//        String dlQuery = "DELETE FROM " + MCQ_TABLE + " WHERE id<=1000";
+//        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+//        sqLiteDatabase.execSQL(dlQuery);
+//    }
+
     // CRUD
 
     void insertMCQ(MCQProblem mcq) {

@@ -6,56 +6,150 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.prrateekk.learningapp.utils.TextToSpeechModule;
 
 import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
-    List <MCQProblem> mcqProblemList;
+    private TextToSpeechModule ttsm;
     private static final String DRAWABLE = "drawable/";
-    TextView textView;
-    ImageView imageView;
+
+    TextView idStatement;
+    ImageView idOption1, idOption2, idOption3;
     private Drawable drawable;
-    private int dr;
+
+    List <MCQProblem> mcqProblemList;
     int mcqCounter;
+    String correctImage;
+
+    Animation animationZoomIn;
+    Animation animationZoomOut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        textView = (TextView) findViewById(R.id.textView3);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        idStatement = (TextView) findViewById(R.id.idStatement);
+        idOption1 = (ImageView) findViewById(R.id.idOption1);
+        idOption2 = (ImageView) findViewById(R.id.idOption2);
+        idOption3 = (ImageView) findViewById(R.id.idOption3);
+
+        animationZoomIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_in);
+        animationZoomOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoom_out);
+
         Intent intent = getIntent();
         mcqProblemList = (List<MCQProblem>) intent.getSerializableExtra("LIST_MCQ");
-        //MCQ SHOULD NOT BE EMPTY - NULL PTR EXCEPTION
-        mcqCounter = 1;
-        textView.setText(mcqProblemList.get(0).getStatement() + mcqProblemList.get(0).getTag());
-        String options[] = mcqProblemList.get(0).getOptions();
-        dr = getResources().getIdentifier(DRAWABLE + options[0], null, getPackageName());
-        drawable = getResources().getDrawable(dr);
-        imageView.setImageDrawable(drawable);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        mcqCounter = 0;
+        nextMCQ();
+
+        idOption1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("ID", getResources().getResourceEntryName(view.getId()));
+                Log.i("ID", "idOption1");
+                idOption1.startAnimation(animationZoomIn);
+                idOption1.startAnimation(animationZoomOut);
+
+                idStatement.setText(correctImage + "idOption1");
+                if (correctImage=="idOption1") nextMCQ();
+            }
+        });
+
+        idOption2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("ID", "idOption2");
+                idStatement.setText(correctImage + "idOption2");
+                if (correctImage=="idOption2") nextMCQ();
+            }
+        });
+
+        idOption3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("ID", "idOption3");
+                idStatement.setText(correctImage + "idOption3");
+                if (correctImage=="idOption3") nextMCQ();
             }
         });
 
     }
 
-    public void nextMCQ(View view) {
+    public void nextMCQ() {
         Log.i("TAG", "NEXT MCQ");
         if (mcqCounter<mcqProblemList.size()) {
             Log.i("TAG", "IN RANGE");
             String options[] = mcqProblemList.get(mcqCounter).getOptions();
-            textView.setText(mcqProblemList.get(mcqCounter).getStatement() + mcqProblemList.get(mcqCounter).getTag() + options[0]);
-            dr = getResources().getIdentifier(DRAWABLE + options[0], null, getPackageName());
+            String correctAns = mcqProblemList.get(mcqCounter).getCorrectAnswer();
+            idStatement.setText(mcqProblemList.get(mcqCounter).getStatement() + correctAns);
+
+            int dr = getResources().getIdentifier(DRAWABLE + options[0], null, getPackageName());
             drawable = getResources().getDrawable(dr);
-            imageView.setImageDrawable(drawable);
+            idOption1.setImageDrawable(drawable);
+
+            dr = getResources().getIdentifier(DRAWABLE + options[1], null, getPackageName());
+            drawable = getResources().getDrawable(dr);
+            idOption2.setImageDrawable(drawable);
+
+            dr = getResources().getIdentifier(DRAWABLE + options[2], null, getPackageName());
+            drawable = getResources().getDrawable(dr);
+            idOption3.setImageDrawable(drawable);
+
+            if (options[0].equals(correctAns)) {
+                correctImage = "idOption1";
+            }
+            else if (options[1].equals(correctAns)) {
+                correctImage = "idOption2";
+            }
+            else if (options[2].equals(correctAns)){
+                correctImage = "idOption3";
+            }
+
+            idStatement.setText(correctAns + correctImage + " " + options[0] + options[1] + options[2]);
+
+            ttsm = new TextToSpeechModule(mcqProblemList.get(mcqCounter).getStatement(), this);
             mcqCounter++;
         }
     }
 
+    public void nextByButton(View view) {
+        Log.i("TAG", "NEXT MCQ");
+        if (mcqCounter<mcqProblemList.size()) {
+            Log.i("TAG", "IN RANGE");
+            String options[] = mcqProblemList.get(mcqCounter).getOptions();
+            idStatement.setText(mcqProblemList.get(mcqCounter).getStatement());
+
+            int dr = getResources().getIdentifier(DRAWABLE + options[0], null, getPackageName());
+            drawable = getResources().getDrawable(dr);
+            idOption1.setImageDrawable(drawable);
+
+            dr = getResources().getIdentifier(DRAWABLE + options[1], null, getPackageName());
+            drawable = getResources().getDrawable(dr);
+            idOption2.setImageDrawable(drawable);
+
+            dr = getResources().getIdentifier(DRAWABLE + options[2], null, getPackageName());
+            drawable = getResources().getDrawable(dr);
+            idOption3.setImageDrawable(drawable);
+
+            String correctAns = mcqProblemList.get(mcqCounter).getCorrectAnswer();
+            if (options[0]==correctAns) {
+                correctImage = "idOption1";
+            }
+            else if (options[1]==correctAns) {
+                correctImage = "idOption2";
+            }
+            else {
+                correctImage = "idOption3";
+            }
+
+            ttsm = new TextToSpeechModule(mcqProblemList.get(mcqCounter).getStatement(), this);
+            mcqCounter++;
+        }
+    }
 }

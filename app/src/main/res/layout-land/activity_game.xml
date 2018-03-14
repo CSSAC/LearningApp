@@ -7,26 +7,25 @@
     tools:context="com.example.prrateekk.learningapp.GameActivity">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/idStatement"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="36dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/idNextBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="252dp"
-        android:onClick="nextMCQ"
+        android:onClick="nextByButton"
         android:text="NEXT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/idOption2"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="8dp"
@@ -49,27 +48,27 @@
         app:srcCompat="@mipmap/ic_launcher" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/idOption1"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/idOption2"
         app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/idOption3"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/idOption2"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
